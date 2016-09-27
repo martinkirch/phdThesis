@@ -1,0 +1,15 @@
+\begin{table}[tb]
+	\centering
+	\begin{tabular}{|c|c|c|c|}
+		\hline
+		Partition      & Partial top-$k$ (phase 1) & Bounds & Complement top-$k$ (phase 2)\\ \hline
+		$G_0$     & $\mathit{top}(0)\rightarrow\{0\}, 4 ; \{0, 1, 2\}, 2$ & $0\rightarrow2$ & $\mathit{top}(1)\rightarrow\{0,1,2\}, 2$ \\
+		$\{0,2\}$ & $\mathit{top}(2)\rightarrow\{2\}, 3 ; \{0, 1, 2\}, 2$ & $2\rightarrow2$ & $\mathit{top}(3)\rightarrow\emptyset$        \\ \hline
+		$G_1$     & $\mathit{top}(1)\rightarrow\{0,1\}, 3$                & $1\rightarrow0$     & $\mathit{top}(0)\rightarrow\{0,1\}, 3$ \\
+		$\{1,3\}$ & $\mathit{top}(3)\rightarrow\{3\}, 2$                  &  $3\rightarrow0$  & $\mathit{top}(2)\rightarrow\emptyset$       \\ \hline
+	\end{tabular}
+	\caption{\label{tab:toppi:phases}
+		2-phase mining over the sample database (Table~\ref{tab:toppi:ex})
+		with 2 workers, $k=2$.
+	}
+\end{table}

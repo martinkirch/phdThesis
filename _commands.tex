@@ -1,0 +1,50 @@
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{property}{Property}
+
+\providecommand{\mf}[1]{\ensuremath{\mathcal{#1}}}
+
+\providecommand{\jlcm}{\mbox{\textit{j}LCM}\xspace}
+\providecommand{\toppi}{\mbox{\textsc{TopPI}}\xspace}
+\providecommand{\capa}{\mbox{\textsc{CAPA}}\xspace}
+\providecommand{\datalyse}{\mbox{\textsc{Datalyse}}\xspace}
+
+\providecommand{\nbm}{39 {}}
+
+\providecommand{\demoassoc}{\texttt{demo\-\_assoc}\xspace}
+\providecommand{\prodassocreceipt}{\texttt{prod\-\_assoc\-\_receipt}\xspace}
+\providecommand{\prodassocclient}{\texttt{prod\-\_assoc\-\_client}\xspace}
+
+\providecommand{\colorred}[1]{\textcolor{red}{#1}}
+\providecommand{\colorblue}[1]{\textcolor{blue}{#1}}
+\providecommand{\colorgreen}[1]{\textcolor{green}{#1}}
+
+\providecommand{\textoverline}[1]{$\overline{\mbox{#1}}$}
+\providecommand{\barre}[1]{\overline{\mbox{#1}}}
+
+\providecommand*\circled[1]{\tikz[baseline=(char.base)]{
+\node[shape=circle,draw,inner sep=1pt,fill=gray!20] (char) {#1};}}
+
+\DeclareMathOperator{\sign}{sgn}
+\providecommand{\sgn}{\mathop{\mathrm{sgn}}}
+
+\providecommand{\comment}[1]{}
+
+\colorlet{g1aColor}{rgb:yellow,1;white,2}
+\colorlet{g1bColor}{rgb:yellow,1;white,2}
+
+\colorlet{g2Color}{rgb:red,1;white,2}
+\colorlet{g3Color}{rgb:green,1;white,2}
+\colorlet{g4Color}{rgb:gray,1;white,2}
+\colorlet{g5Color}{rgb:blue,1;white,2}
+
+\renewcommand{\topfraction}{0.9}	% max fraction of floats at top
+%\renewcommand{\bottomfraction}{0.8}	% max fraction of floats at bottom
+%   Parameters for TEXT pages (not float pages):
+%\setcounter{topnumber}{2}
+%\setcounter{bottomnumber}{2}
+%\setcounter{totalnumber}{4}     % 2 may work better
+%\renewcommand{\textfraction}{0.07}	% allow minimal text w. figs
+%   Parameters for FLOAT pages (not text pages):
+\renewcommand{\floatpagefraction}{0.7}	% require fuller float pages
+% N.B.: floatpagefraction MUST be less than topfraction !!

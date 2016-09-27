@@ -1,0 +1,19 @@
+\begin{algorithm}[t!]
+	\begin{small}
+		\caption{Itemsets extraction}
+		\label{alg:capa:lcm}
+		\KwData{dataset $\cal D$, minimum support threshold $\varepsilon$, target items $\cal B$}
+		\KwResult{Output all frequent closed itemsets in ${\cal D}$ that contain an item from $\cal B$}
+		\Begin{
+			\ForEach{$e \in {\cal B}$}{ \label{line:targets}
+				\If{\demoassoc}{
+					${\cal D}' = \{T \setminus {\cal B} | T \in {\cal D}[e]\}$ \label{line:withoutStarters} \\
+				}
+				\Else {
+					${\cal D}' = {\cal D}[e]$ \label{line:withStarters} \\
+				}
+				\jlcm$(\emptyset,\{e\},{\cal D}',\varepsilon)$ \label{line:LCMstarterExpand}
+			}
+		}
+	\end{small}
+\end{algorithm}

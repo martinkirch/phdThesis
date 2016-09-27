@@ -1,0 +1,67 @@
+% !TEX root = ../paper.tex
+
+\begin{table}[H]
+{\footnotesize
+  \centering
+  \begin{tabular}{|l|l|c|}
+		\hline
+    \textbf{Measure}  &   \textbf{Formula} &\textbf{Group}\\\specialrule{.15em}{0em}{0em}
+    One-Way Support                  & $P(B|A)\times log_{2}\frac{P(AB)}{P(A)P(B)}$ &\cellcolor{g1aColor}\\\cline{1-2}
+    Relative Risk                    & $P(B|A) / P(B|\neg A)$ &\cellcolor{g1aColor}\\\cline{1-2}
+    Odd Multiplier                   & $\frac{P(AB)P(\neg B)}{P(B)P(A \neg B)}$ &\cellcolor{g1aColor}\\\cline{1-2}
+    Zhang                            & $\frac{P(AB)-P(A)P(B)}{max(P(AB)P(\neg B), P(B)P(A \neg B))}$ &\cellcolor{g1aColor}\\\cline{1-2}
+    Yule's Q $\Diamond$                        & $\frac{P(AB)P(\neg A \neg B)-P(A \neg B)P(B \neg A)}{P(AB)P(\neg A \neg B)+P(A \neg B)P(B \neg A)}$ &\cellcolor{g1aColor}\\\cline{1-2}
+    Yule's Y $\Diamond$                        & $\frac{\sqrt{P(AB)P(\neg A \neg B)}-\sqrt{P(A \neg B)P(B \neg A)}}{\sqrt{P(AB)P(\neg A \neg B)}+\sqrt{P(A \neg B)P(B \neg A)}}$ &\cellcolor{g1aColor}\\\cline{1-2}
+    Odds Ratio $\Diamond$                      & $\frac{P(AB)P(\neg A \neg B)}{P(A \neg B)P(B \neg A)} $ &\cellcolor{g1aColor}\\\cline{1-2}
+    Information Gain $\ast$$\ominus$          & $\mathit{log}(P(AB)/(P(A)P(B)))$ &\cellcolor{g1aColor}\\\cline{1-2}
+    Lift $\ast$$\ominus$                            & $P(AB)/(P(A)P(B))$&\cellcolor{g1aColor}\\\cline{1-2}
+    Bayes Factor $\ast$                    & $P(A|B)/P(A|\neg B)$ & \cellcolor{g1aColor}\multirow{-9}{*}{$G_1^a$} \\\specialrule{.12em}{0em}{0em}
+%
+    Added Value $\ast$                     & $P(B|A) - P(B)$ &\cellcolor{g1bColor}\\\cline{1-2}
+    Certainty Factor $\ast$                & $(P(B|A) - P(B)) / (1 - P(B))$ &\cellcolor{g1bColor}\\\cline{1-2}
+    Confidence $\ast$$\otimes$          & $P(B|A)$ &\cellcolor{g1bColor}\\\cline{1-2}
+    Centered Confidence $\ast$             & $P(B|A) - P(B)$  &\cellcolor{g1bColor}\\\cline{1-2}
+    Loevinger $\dagger$                       & $1 - \frac{P(A)P(\neg B)}{P(A \neg B)}$ &\cellcolor{g1bColor}\\\cline{1-2}
+    Conviction $\dagger$                      & $\frac{P(A)P(\neg B)}{P(A \neg B)}$ &\cellcolor{g1bColor}\\\cline{1-2}
+    \pbox{10cm}{Examples and Counter-\\examples Rate} & $1 - \frac{P(A \neg B)}{P(AB)}$ &\cellcolor{g1bColor}\\\cline{1-2}
+    Sebag-Schoenauer                 & $\frac{P(AB)}{P(A \neg B)}$ &\cellcolor{g1bColor}\\\cline{1-2}
+    Leverage                         & $P(B|A) - P(A)P(B)$ &\cellcolor{g1bColor}\\\cline{1-2}
+    Laplace Correction $\ast$$\otimes$          & $\frac{\mathit{support}(AB)+1}{\mathit{support}(A)+2}$  & \cellcolor{g1bColor}\multirow{-9}{*}{$G_1^b$}\\\specialrule{.15em}{0em}{0em}
+%%
+    Least Contradiction              & $\frac{P(AB)-P(A \neg B)}{P(B)}$ &\cellcolor{g2Color}\\\cline{1-2}
+    Accuracy                         & $P(AB) + P(\neg A \neg B)$ &\cellcolor{g2Color}\multirow{-2}{*}{$G_2$}\\\specialrule{.15em}{0em}{0em}
+%%
+    Pearson's $\chi^2$ $\triangleright$              & $|{\cal T}| \times \left(\frac{(P(AB)-P(A)P(B))^2}{P(A)P(B)} + \frac{(P(\neg A B)-P(\neg A)P(B))^2}{P(\neg A)P(B)}\right)$&\cellcolor{g3Color}\\
+&$+ |{\cal T}| \times \left(\frac{(P(A \neg B)-P(A)P(\neg B))^2}{P(A)P(B)} + \frac{(P(\neg A \neg B)-P(\neg A)P(\neg B))^2}{P(\neg A)P(\neg B)}\right)$&\cellcolor{g3Color}\\\cline{1-2}
+    Gini Index $\triangleright$                      & $P(A)\times(P(B|A)^2 + P(\neg B|A)^2) + P(\neg A)\times(P(B|\neg A)^2+$&\cellcolor{g3Color}\\
+&$P(\neg B|\neg A)^2)-P(B)^2 - P(\neg B)^2$&\cellcolor{g3Color}\\\cline{1-2}
+    J-measure                        & $P(AB)log(\frac{P(B|A)}{P(B)})+P(A \neg B)log(\frac{P(\neg B|A)}{P(\neg B)})$ &\cellcolor{g3Color}\\\cline{1-2}
+    \pbox{10cm}{$\Phi$ Linear Correlation \\Coefficient} & $\frac{P(AB)-P(A)P(B)}{\sqrt{P(A)P(B)P(\neg A)P(\neg B)}}$&\cellcolor{g3Color}\\\cline{1-2}
+    Two-Way Support         & $P(AB)\times log_{2}\frac{P(AB)}{P(A)P(B)} + P(A \neg B)\times log_{2}\frac{P(A \neg B)}{P(A)P(\neg B)} +$ &\cellcolor{g3Color}\\
+    Variation        & $P(\neg A B)\times log_{2}\frac{P(\neg A B)}{P(\neg A)P(B)} + P(\neg A \neg B)\times log_{2}\frac{P(\neg A \neg B)}{P(\neg A)P(\neg B)}$&\cellcolor{g3Color}\\\cline{1-2}
+    Fisher's exact test               & $\frac{\binom{|{\cal T}|\times P(B)}{|{\cal T}| \times P(AB)}\binom{|{\cal T}| \times P(\neg B)}{|{\cal T}| \times P(A\neg B)}}{\binom{|{\cal T}|}{|{\cal T}|\times P(A)}}$ &\cellcolor{g3Color}\\\cline{1-2}
+    Jaccard                          & $P(AB) / (P(A)+P(B)-P(AB))$ &\cellcolor{g3Color}\\\cline{1-2}
+    Cosine                           & $\frac{P(AB)}{\sqrt{P(A)P(B)}}$ &\cellcolor{g3Color}\\\cline{1-2}
+    Implication Index                & $\frac{\mathit{support}(A)\mathit{support}(B)-|{\cal T}|\mathit{support}(AB)}{\sqrt{|{\cal T}|\mathit{support}(A)\mathit{support}(\neg B)}}$ & \cellcolor{g3Color} \\\cline{1-2}
+    Kappa Coefficient                & $2\frac{|{\cal T}|\mathit{support}(AB)-\mathit{support}(A)\mathit{support}(B)}{|{\cal T}|\mathit{support}(A)+|{\cal T}|\mathit{support}(B)-2\mathit{support}(A)\mathit{support}(B)}$ &
+      \cellcolor{g3Color}\multirow{-13}{*}{$G_3$} \\
+      \specialrule{.15em}{0em}{0em}
+%%
+    Two-Way Support                  & $P(AB)\times log_{2}\frac{P(AB)}{P(A)P(B)}$&\cellcolor{g4Color}\\\cline{1-2}
+    Piatetsky-Shapiro                & $P(AB)-P(A)P(B)$ &\cellcolor{g4Color}\\\cline{1-2}
+    Klosgen                          & $\sqrt{P(AB)}\mathit{max}(P(B|A)-P(B), P(A|B)-P(A))$ &\cellcolor{g4Color}\\\cline{1-2}
+    Specificity                      & $P(\neg B | \neg A)$ &\cellcolor{g4Color}\multirow{-4}{*}{$G_4$}\\\specialrule{.15em}{0em}{0em}
+%%
+    Recall                           & $P(A|B)$ &\cellcolor{g5Color}\\\cline{1-2}
+    Collective Strength              & $\frac{P(AB)+P(\neg B|\neg A)}{P(A)P(B)+P(\neg A)P(\neg B)}\times\frac{1-P(A)P(B)-P(\neg A)P(\neg B)}{1 - P(AB) - P(\neg B|\neg A)}$&\cellcolor{g5Color}\multirow{-2}{*}{$G_5$}\\\hline
+
+    %Pearson's correlation coefficient& $ \frac{|{\cal T}|\mathit{support}(AB)-\mathit{support}(A)\mathit{support}(B)}{\sqrt{|{\cal T}|\mathit{support}(A)\mathit{support}(B)\mathit{support}(\neg A)\mathit{support}(\neg B)}} $ \\\hline
+  \end{tabular}
+  \caption{Interestingness measures of a rule $A \rightarrow B$.
+    $\ast$, $\triangleright$ indicate measures that produce the same rule ranking when a single target is selected.
+    $\Diamond$, $\dagger$, $\ominus$, $\otimes$ indicate measures that always produce the same rule ranking.
+      $|{\cal T}|$ is the number of transactions. $P(A) = support(A)/|{\cal T}|$.
+  }
+  \label{tab:measures}
+}
+\end{table}

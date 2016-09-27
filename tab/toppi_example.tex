@@ -1,0 +1,23 @@
+\begin{table}
+	\begin{subtable}[b]{0.48\textwidth}
+		\centering
+		\input{tab/example_D}
+		\caption{\label{tab:toppi:sample:in}Dataset $\cal D$}
+	\end{subtable}
+	\hfill
+	\begin{subtable}[b]{0.48\textwidth}
+		\centering
+		\begin{tabular}{|c|l|l|}
+			\hline
+			item   & \multicolumn{2}{c|}{$\mathit{top}(i)$: $P$, $\mathit{support}(P)$} \\
+			$i$& $1^{st}$ &$ 2^{nd}$\\
+			\hline
+			$0$ & $\{0\},4$ & $\{0,1\},3$ \\
+			$1$ & $\{0,1\},3$ & $\{0,1,2\},2$ \\
+			$2$ & $\{2\},3$ & $\{0,1,2\},2$ \\
+			$3$ & $\{3\},2$ & \\\hline
+		\end{tabular}
+		\caption{\label{tab:toppi:sample:out}Results for $k=2$}
+	\end{subtable}
+	\caption{Example \toppi input and output}
+\end{table}

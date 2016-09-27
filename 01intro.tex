@@ -1,0 +1,248 @@
+\chapter{Introduction}
+\label{chap:intro}
+
+In 1960, the introduction of the IBM 1401 manual~\cite{IBM60} celebrates
+the apparition of magnetic storage, replacing unit-record (punched cards):
+
+\begin{quote}
+  ``As the volume of data to be processed increases, as the decision-making process is refined to the point where it requires more and more information, as the time available for decision-making becomes shorter, unit-record equipment continues to offer economies and advantages, but not at the same rate of improvement in time-saving and dollar-saving.
+The next available step in the mechanization process takes the businessman into intermediate and large-scale data processing.''
+\end{quote}
+
+More than 50 years later,
+the only outdated idea in this paragraph is ``unit-record equipment''.
+Business and academic analysts are still using automated methods
+to extract knowledge and insights from large collections of low-level records.
+
+Now coined ``big data'',
+the activity of ``large-scale data processing'' is still ongoing,
+and at larger and larger scales.
+A characteristic feature of the big data movement is to record any information passing by,
+which quickly generates millions or billions of records, or more.
+This is pushed by historically low storage costs, currently counted in {\em cents} per gigabyte,
+and the availability of various parallel systems that solve the size, throughput and reliability issues.
+Data is not labelled ``big'' because of its absolute size ---
+as our reference to the IBM 1401 manual suggests, unit scales evolve quickly.
+We can instead consider that ``big data'' refers to
+``data whose size forces us to look beyond the tried-and-true methods that are prevalent at that time''~\cite{JacobsACM09}.
+That leads us to the present work.
+
+
+\vfill
+\pagebreak
+
+\section{Association rules mining in the big data era} % aka Context & Motivation
+\label{sec:intro:context}
+
+Among the various ways to automatically extract knowledge from data~\cite{Tan2007},
+we focus on association rules,
+as introduced by Agrawal and Srikant~\cite{AgrawalVLDB94} for supermarket tickets analysis.
+Association rules allow to discover which sets of products are frequently associated together in customers' baskets.
+Before formalizing association rules,
+we illustrate their principle on the following tickets:
+
+{
+\renewcommand{\labelenumi}{Ticket \theenumi:}
+\begin{enumerate}
+  \leftskip .52in
+  \item \underline{bread, butter}, noodles, pesto sauce, frozen shrimps
+  \item eggs, cheese, noodles
+  \item \underline{bread, butter, strawberry jam}, eggs, shampoo
+  \item \underline{bread, butter}, wine
+  \item \underline{bread}, cereals, milk
+  \item \underline{bread, butter, strawberry jam}, orange juice
+  \item \underline{bread, butter}, maple syrup, flour
+\end{enumerate}
+}
+
+We can observe that {\em bread} is almost always bought with {\em butter}.
+This is represented by the association rule $\mathit{bread} \rightarrow \mathit{butter}$.
+In two tickets,
+{\em bread} and {\em butter} also appear with {\em strawberry jam}.
+These yield another association rule:
+$\mathit{bread} \rightarrow \{\mathit{butter}, \mathit{strawberry\ jam}\}$.
+
+Following the model of Agrawal and Srikant, we call a ticket a {\em transaction},
+and a product an {\em item}. A transaction is a set of items.
+Many kinds of data can fit into this model.
+For instance, we also use data crawled from {\em LastFM}, a music streaming website.
+We can read on each user's public profile the list of her favorite artists.
+By considering that an item represents an artist,
+we create a transaction from each user profile.
+Thus, each transaction represents a user's favorite artists:
+{
+\renewcommand{\labelenumi}{User \theenumi:}
+\begin{enumerate}
+  \leftskip .4in
+  \item \underline{The Beatles, Red Hot Chili Pepper}, Linkin Park
+  \item Red Hot Chili Pepper, Radiohead, The White Stripes
+  %\item Radiohead, The Arcade Fire, Franz Ferdinand, Oasis
+  \item \underline{The Beatles, Red Hot Chili Pepper, Muse}
+  \item Daft Punk, Air
+  \item \underline{The Beatles, Red Hot Chili Pepper}, Britney Spears
+  \item \underline{The Beatles, Muse}, Coldplay
+  \item \underline{The Beatles, Red Hot Chili Pepper, Muse}, Led Zeppelin
+\end{enumerate}
+}
+
+From these transactions we discover that users listening to {\em The Beatles}
+also listen to {\em Red Hot Chili Pepper}, or to {\em Muse} and {\em Red Hot Chili Pepper}.
+Those are represented respectively by the association rules
+{\em The Beatles} $\rightarrow$ {\em Red Hot Chili Pepper}
+and
+{\em The Beatles} $\rightarrow$ {\em \{Muse, Red Hot Chili Pepper\}}.
+An association rule is derived from two {\em itemsets}.
+The first one is the left side of the association,
+the other is the union of all items in the association.
+For example, our last example comes from the discovery of transactions
+containing {\em \{The Beatles\}} and {\em \{The Beatles, Muse, Red Hot Chili Pepper\}}.
+For brevity we do not mention here all the rules that can be generated from our examples.
+
+Our example associations result from the mining of {\em frequent itemsets} --- {\em ie.}
+sets of items which frequently appear together in the input transactions.
+They intuitively represent how items are usually associated.
+%in the previous cases by customers or users.
+Over the past twenty years,
+various frequent itemset mining algorithms have been proposed
+and applied successfully on such datasets to uncover associations~\cite{CeglarACM2006}.
+%Existing work also proposes finer classes of itemsets.
+%we review these in Section~\ref{sec:rel:fim}.
+
+The number of potential combinations is a well-known combinatorial problem. % common difficulty for itemsets miners.
+Indeed, given $n$ items we have $2^n$ possible itemsets.
+With a million artists or products,
+this combinatorial explosion may overwhelm our computers' capacity.
+When analyzing nation-wide supermarket purchases,
+or world-wide playlists,
+existing methods thus show two important limitations.
+
+Firstly, state-of-the-art algorithms cannot grasp so many items and their combinations.
+Usually most items are filtered out,
+whether beforehand by the analyst
+or during the computation according to a parameter.
+Hence existing algorithms provide insights, but only about a minority of items.
+In order to explore less frequent items' associations,
+the analyst has to guide manually  the mining
+--- a tedious task, at large scale.
+
+The second limitation is the readability of results.
+Even if some algorithms are able to mine data at this scale,
+the resulting associations are too numerous.
+Filtering these results has the same drawback as filtering before mining:
+the analyst firstly has to guess what to filter, and will likely miss interesting associations.
+Another solution is to sort the resulting associations:
+many quality measures have been proposed and can be used to sort itemsets or association rules~\cite{GengACM06,Lenca2007}.
+However these measures were not designed for datasets containing millions of transactions,
+and existing studies cannot help the analyst to choose a measure
+that will reliably rank interesting associations among top results.
+
+%
+% We propose an algorithm able to extract itemsets about all items appearing in the dataset.
+% Then we study which quality measure highlights the most interesting associations.
+% This study relies on an automatic comparison of measures and
+% on the opinion of marketing experts associated to our research project, \datalyse.
+% We show in conclusion that our two contributions can be combined to provide a
+% result set that is easily browsed by the analyst,
+% showing just a few dozens itemsets of high interest at each step of the exploration.
+%
+
+
+
+
+
+\section{Scope of this work}
+
+In this thesis we are interested in the extraction of an easy-to-browse collection of interesting association rules
+from large-scale transactional datasets,
+that is millions of transactions over hundreds of thousands or millions items.
+Our notion of interest does not rely on external data or knowledge:
+interest should be based on the combined items' distributions alone.
+
+We address two use cases,
+which respectively overcome the limitations mentioned in Section~\ref{sec:intro:context}.
+The first one corresponds to the early analysis on an itemset.
+In this case we should facilitate the navigation in all parts of the data,
+{\em ie.} be able to provide associations about all items.
+The second one is more targeted.
+When the analyst is able to specify which items she is interested in,
+we should compute and select only the most interesting associations.
+In both cases our results are presented directly to the analyst;
+we assume she will not consult more than a hundred associations at once.
+
+We present sets of products found in supermarket receipts,
+demographic attributes associated to various product categories,
+and sets of artists found in music playlists.
+But the same method can also find which pages are consulted consecutively on a website,
+which set of words usually appear in a text, etc.
+
+To tackle the computational difficulties raised by the number of possible associations,
+we leverage the parallelism of the systems storing the large datasets we are interested in.
+We parallelize both on shared-memory systems and on distributed systems.
+
+
+
+\section{Technology transfer to \datalyse}
+
+
+This thesis is funded by the \datalyse project\footnote{\url{http://datalyse.fr/}},
+a french consortium involving 4 computer science laboratories and 3 companies.
+Those partners cover a wide scope of data-intensive applications:
+collection, storage, analysis, or presentation.
+This work belongs to the user data analytics branch of the project.
+
+Our main partner in this project is Groupement des Mousquetaires,
+a major retailer funded in 1969 in France and now developed across Europe and various markets,
+from hardware stores to car centers.
+We collaborate more particularly with the business intelligence and marketing
+departments of Intermarch\'e,
+which is their main and first brand,
+specialized in generalist retail stores.
+Intermarch\'e is a franchise-based network of almost 2000 stores across France.
+
+This collaboration allow us to run experiments with real data,
+but also to benefit from business use cases and deploy our algorithms on a production system.
+Our contributions have been provided early on to Intermarch\'e,
+allowing us to take into account their feedback in different iterations of our work.
+%We report this feedback where relevant.
+
+
+\section{Overview of this thesis and contributions}
+
+The rest of this manuscript is organized as follows:
+
+\begin{itemize}
+  \item In {\bf Chapter~\ref{chap:rel}} we start by detailing the data model we use for association rules mining.
+    Then we review existing algorithms,
+    and motivate our implementation of a state-of-the-art itemsets miner
+    as an open source library,
+    \jlcm\footnote{\url{https://github.com/slide-lig/jlcm}}.
+    This chapter also presents related work on selecting high-quality associations
+    and parallelism for large-scale mining.
+
+  \item {\bf Chapter~\ref{chap:model}} depicts our experimental and production platforms.
+    We firstly show the complete analytics workflow of the \datalyse project,
+    in which our contributions are integrated.
+    This system creates 3 of the 5 datasets used in our experiments.
+    We conclude by discussing which characteristics make these datasets relevant to our study.
+
+  \item {\bf Chapter~\ref{chap:toppi}} presents our first contribution, \toppi.
+    It implements the item-centric mining semantics,
+    whose goal is to find the $k$ most frequent itemsets containing each item in the input dataset.
+    We show that \toppi provides interesting results in reasonable time,
+    which can be reduced further when parallelized on a high-end server or a commodity cluster.
+
+  \item {\bf Chapter~\ref{chap:capa}} presents our second contribution:
+    a framework comparing quality measures for association rules,
+    \capa ({\bf C}omparative {\bf A}nalysis of {\bf PA}tterns).
+    A first quantitative comparison allows us to group the \nbm measures we implemented in 5 families
+    based on the similarity of the rule rankings they produce.
+    Then we involve marketing experts in a user study,
+    in order to point out which measure or family of measures highlights the most interesting
+    association rules for the retail domain.
+
+  \item We conclude in {\bf Chapter~\ref{chap:conclusion}} by showing how our two contributions
+  can be combined to create an organized and concise selection of association rules.
+  We finally describe open perspectives for future work in association rules mining.
+  %more precisely that \toppi's per-item results can be re-ranked according
+  %to a quality measure chosen via \capa, in order .
+\end{itemize}

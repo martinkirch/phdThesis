@@ -1,0 +1,21 @@
+\begin{figure*}[h!]
+	\centering
+	\begin{tikzpicture}[>=latex]
+    \node (customer) at (-5,1) {Customer files};
+
+    \node (receipts) at (-5,0) {Sales receipts};
+
+    \node (taxonomy) at (-5,-1) {Products taxonomy};
+
+    \node [align=center](transformation) at (-0.5,0) {Curation as\\transactions};
+    \draw [->] (customer.east) -- (transformation.north west);
+    \draw [->] (receipts.east) -- (transformation.west);
+    \draw [->] (taxonomy.east) -- (transformation.south west);
+
+    \node [align=center](mining) at (3,0) {Associations\\mining};
+    \draw [->] (transformation.east) -- (mining.west);
+
+    \node [align=center](exploration) at (6,0) {Result\\exploration};
+    \draw [->] (mining.east) -- (exploration.west);
+	\end{tikzpicture}
+\end{figure*}

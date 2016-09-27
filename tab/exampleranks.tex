@@ -1,0 +1,22 @@
+\begin{table}
+  \begin{center}
+    \begin{tabular}{c|c}
+      Ranking & Content\\
+      \hline
+      $L^1$& $r_1,r_2,r_3,r_4$ \\
+      $L^2$& $r_2,r_1,r_3,r_4$ \\
+      $L^3$& $r_1,r_2,r_4,r_3$  \\
+      $L^4$& $r_2,r_3,r_1,r_4$ \\
+    \end{tabular}
+    \begin{tabular}{c|c|c|c|c}
+      &$\mathit{Spearman}$&$\tau$&$\mathit{Overlap}$@$2$&$\mathit{NDCC}$\\
+      \hline
+      $L^2$&$0.80$&$0.67$&$1$&$0.20$\\
+      $L^3$&$0.80$&$0.67$&$1$&$0.97$\\
+      $L^4$&$0.40$&$0.33$&$0.5$&$-0.18$\\
+    \end{tabular}
+    \caption{Example rankings,
+      and correlations between $L^1$ and the three other rankings.
+    \label{tab:exampleranks}}
+  \end{center}
+\end{table}

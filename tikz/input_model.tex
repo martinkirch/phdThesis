@@ -1,0 +1,79 @@
+\tikzset{
+  state/.style={
+         rectangle,
+         rounded corners,
+         draw=black, very thick,
+         minimum height=2em,
+         inner sep=0,
+         text centered,
+         },
+}
+
+    \node[state] (receipts) {
+      \begin{tabular}{c}
+        \textbf{Receipts}\\
+        \hline
+        $r \in \cal R$\\
+        $p \in \cal P$\\
+        $c \in \cal C$
+      \end{tabular}
+    };
+
+    \node[state,
+      left of=receipts,
+      node distance=10em,
+      anchor=center] (customers)
+    {
+      \begin{tabular}{c}
+        \textbf{Customers}\\
+        \hline
+        \underline{$c \in \cal C$}\\
+        Age\\
+        Gender\\
+        Region\\
+        Department
+      \end{tabular}
+    };
+
+    \node[state,
+      right of=receipts,
+      node distance=10em,
+      anchor=center] (products)
+    {
+      \begin{tabular}{c}
+        \textbf{Products}\\
+        \hline
+        \underline{$p \in \cal P$}\\
+        Label
+      \end{tabular}
+    };
+
+    \node[state,
+      right of=products,
+      node distance=10em,
+      anchor=center] (taxonomy)
+    {
+      \begin{tabular}{c}
+        \textbf{Taxonomy}\\
+        \hline
+        \underline{$\mathit{category\_id}$}\\
+        $p \in \cal P$\\
+        Label
+      \end{tabular}
+    };
+
+
+    \path (customers.east) edge
+      node[anchor=west,above,xshift=-0.7em]{$(0,N)$}
+      node[anchor=east,below,xshift=0.8em]{$(1,1)$}
+      (receipts);
+
+    \path (receipts.east) edge
+      node[anchor=west,above,xshift=-1em]{$(1,1)$}
+      node[anchor=east,below,xshift=0.8em]{$(0,N)$}
+      (products.west);
+
+    \path (products.east) edge
+      node[anchor=west,above,xshift=-0.8em]{$(1,4)$}
+      node[anchor=east,below,xshift=0.6em]{$(1,N)$}
+      (taxonomy.west);

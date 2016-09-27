@@ -1,0 +1,17 @@
+\begin{algorithm}
+	\caption{\toppi's main function}
+	\label{alg:toppi:main}
+	\KwData{dataset $\cal D$, integer $k$}
+	\KwResult{Output top-$k$ CIS for all items of ${\cal D}$}
+	\Begin{
+		\ForEach(\tcp*[f]{Collector instantiation}){$i \in {\cal I}$\label{line:initcollectstart}}{
+					\textbf{initialize} $\mathit{top(i)}$, heap of max size $k$\label{line:initcollectend}
+		}
+		%$\emptyset_{closed} \gets \bigcap_{t \in {\cal D}}\ t$ \\
+		%$\mathit{collect(\emptyset_{closed},|{\cal D}|})$\\
+
+		\ForEach(\tcp*[f]{In increasing item order}){$i \in {\cal I}$\label{line:topLCMstarters}}{
+			$startBranch(i,{\cal D},k)$\label{line:startBranchInvoc}
+		}
+	}
+\end{algorithm}

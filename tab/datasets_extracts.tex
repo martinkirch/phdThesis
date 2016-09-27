@@ -1,0 +1,93 @@
+\begin{table}[t!]
+\centering
+\begin{scriptsize}
+\def\arraystretch{1.5}
+\begin{tabular}{p{0.95\textwidth}}
+  MOULIN. MODULE PETIT DEJEUNE, BALAI PVC 60CM SM \\
+  BRANDADE MORUE 300G, MOISSON 6 OEUFS, HC240X220+2TO OCEAN, DH 140X190 OCEAN, TT 90X185 OCEAN \\
+  CROQUET.ADULTE 10KG \\
+  HARICOT VERT EF4/4 440G, BOXER X2 3D FLEX, LIQ. TAPIS MOQUETTE 600ML, MOUCH.ETUIS 15X10, SALADE MELANGE 250G\\
+  CAMEMBERT NOIR 250G, KNACKS X20 700 GR, COMTE 6M PORTION 350G, CHEVRE LONG 180G, SALADE MELANGE 250G \\
+  CIDRE RGE CELLIER, CIDRE CELLIER 6*75, BUCHE FONDANTE250G, BOURGUIGNON+PDT PERSILLEES 1KG, GALET ROIS POMME 400G, BEURRE DOUX PQ 250G, PUREES AV.OIGN/CIBOULE.375G, BEURRE 1/2 SEL 500G+100G   \\
+\end{tabular}
+\caption{
+  Extract from our \prodassocreceipt dataset (items are separated by commas, brand names removed).
+  \prodassocclient is similar, except transactions usually contain ten times more products.
+  \label{tab:extracts:products}
+}
+\end{scriptsize}
+\end{table}
+
+
+
+\begin{table}[t!]
+\centering
+\begin{scriptsize}
+\def\arraystretch{1.2}
+\begin{tabular}{|c|c|c|}
+  \hline
+  $A \rightarrow B$       & $\mathit{support}(A)$ & $\mathit{support}(A \cup B)$ \\\hline
+  LIEGEOIS CHOCO 4X100G $\rightarrow$  CR.DESS.CHOCO 4X115G       & \num{477710}& \num{98693}   \\
+  \{P.FEUILLT ROULE, PREP.FRANGIPANE\} $\rightarrow$ SUCRE POUDRE 1/2KG & \num{9743} & \num{522}  \\
+  \{ALGUES NORI 17.50G, WASABI 43G, SAUCE SOJA JAP 200ML\} & & \\
+                             $\rightarrow$ RIZ SUSHI 450G & \num{212}     & \num{133}   \\
+  \hline
+\end{tabular}
+\caption{
+  Example association rules extracted from \prodassocreceipt
+  (we search similar rules in \prodassocclient).
+  \label{tab:extracts:products:rules}
+}
+\end{scriptsize}
+\end{table}
+
+
+\begin{table}[t!]
+\centering
+\begin{scriptsize}
+\def\arraystretch{1.5}
+\begin{tabular}{p{0.95\textwidth}}
+  {\em <35, Male, Auvergne, Allier}, SURGELES, CRUSTACES, BISCUITS FRUITES, BALLADEUR AUDIO,
+    PETITE PUERICULTURE, D.P.H., MOUCHOIR \& PAPIERS HYGIENIQUES, ... \\
+  {\em <35, Female, Rhône-Alpes, Isère}, FRUITS ET LEGUMES, F/L FRAIS EMBALLE, F/L RAYON REFRIGERE DLC COURTE,
+    EPICERIE SALEE, FARINES, FARINE PREPA PAINS, ... \\
+  {\em >65, Male, Poitou-Charentes, Vienne}, SAUCISSERIE, SURIMI, BOUL PAT TRAD, VIENNOISERIE TRAD,
+    TRAITEUR TRAD, LIQUIDES, APERITIFS SANS ALCOOL, EAUX MINERALES, ...\\
+  {\em 50-65,  Female, Franche-Comté, Haute Saône}, D.P.H., MAQUILLAGE, MAQUILLAGE COFFRETS, CREMERIE LS, BEURRE LS, OEUFS, PRODUITS CULTURELS,
+    JEUX CONSOLES, FROMAGE TRAD, FROMAGE COUPE, SPECIALITES REGIONALES, ... \\
+  {\em  50-65,  Female, Franche-Comté, Haute Saône}, CHARCUTERIE TRAITEUR, CRUDITES, SANDWICH, FOIES GRAS,
+    PAIN PAT LS INDUS, PAIN DE MIE ET ASSIMILES, PAINS PRECUITS, ...\\
+\end{tabular}
+\caption{
+  Extract from our \demoassoc dataset, with shortened transactions as customers
+  are usually buying products from dozens of categories,
+  because each product contributes its 4 containing categories here.
+  Demographic attributes are italicized.
+%  As described in Section~\ref{sec:model:curation},
+%  the actual file stores, for each distinct customer segment,
+%  the number of occurrences of each products category.
+%  For example, the two last lines of this example are grouped.
+  \label{tab:extracts:demo}
+}
+\end{scriptsize}
+\end{table}
+
+
+\begin{table}[t!]
+\centering
+\begin{scriptsize}
+\def\arraystretch{1.2}
+\begin{tabular}{|c|c|c|}
+  \hline
+  $A \rightarrow B$       & $\mathit{support}(A)$ & $\mathit{support}(A \cup B)$ \\\hline
+  {\em Alsace} $\rightarrow$ PAINS DE CAMPAGNE & \num{2843532} & \num{28889}  \\
+  {\em 35-49, Female} $\rightarrow$  PRODUITS SOLAIRES  & \num{49677175}& \num{196612}   \\
+  {\em >65, Nord, Nord-Pas-de-Calais} $\rightarrow$ CHAMPAGNES MILLESIMES  & \num{2957290}     & \num{1187}   \\
+  \hline
+\end{tabular}
+\caption{
+  Example association rules extracted from \demoassoc.
+  \label{tab:extracts:demo:rules}
+}
+\end{scriptsize}
+\end{table}

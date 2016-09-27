@@ -1,0 +1,35 @@
+\begin{algorithm}%[tb]
+%\begin{small}
+	\caption{LCM}
+	\label{alg:jlcm}
+  	\KwData{dataset $D$, minimum support threshold $\varepsilon$}
+  	\KwResult{Outputs all frequent closed itemsets in ${\cal D}$}
+	\Begin{
+            $\bot_{closed} \gets  \bigcap_{T \in {\cal D}}\ T$\\
+            \textbf{output} $\bot_{closed}$\\
+            \ForEach{$i \in {\cal I}  \mid  i \not \in \bot_{closed}$}{
+	      $expand(\bot_{closed},i,{\cal D},\varepsilon)$\label{line:LCMstart}
+            }
+	}
+
+	%\setcounter{AlgoLine}{0}
+ 	\SetKwProg{myproc}{Function}{}{}
+	\myproc{$\mathit{expand(I,i,{\cal D}_I,\varepsilon)}$}{
+		\KwData{Closed frequent itemset $I$, extension item $i$, reduced dataset $D_I$, minimum support threshold $\varepsilon$}
+		\KwResult{Outputs all closed itemsets containing $\{i\}\cup I$}
+		\Begin{
+      \If(\tcp*[f]{Frequency test}){$\mathit{support}_{{\cal D}_I}(\{i\}) \geq \varepsilon$}{ \label{line:LCMfrqTest}
+		      $I_{ext} \gets \bigcap_{T \in {\cal D}_I[\{i\}]}T$ \tcp*[f]{Closure computation}\\ \label{line:LCMitemsetClosure}
+		      \If(\tcp*[f]{$1^{st}$ parent test}){$\mathit{maxItem(I_{ext})} = i$}{ \label{line:LCM1stparent}
+                        $J \gets I \cup I_{ext}$\\ \label{line:LCMjoinPPext}
+                        \textbf{output} $(J,\mathit{support}_{{\cal D}_I}(\{i\}))$\\ \label{line:LCMoutput}
+                        $D_J = \{T \setminus J \;|\; T \in {\cal D}_I[\{i\}]\}$ \\ \label{line:LCMdatasetRed}
+			\ForEach(\tcp*[f]{Augmentations}){$j \in {\cal I}\setminus J \mid j < i $}{\label{line:LCMaugmentations}
+			  $\mathit{expand}(J,j,{\cal D}_J,\varepsilon)$    \label{line:LCMrecCall}
+			}
+		      }
+                    }
+		}
+	}
+%\end{small}
+\end{algorithm}

@@ -1,0 +1,20 @@
+\begin{table*}[th!]
+	\centering
+	\begin{tabular}{|c|c|c|}
+		\hline
+		\textbf{Target Associations}        & \textbf{Input transactions ${\cal T}$} & \textbf{Desired association rules}\\ \hline
+		\demoassoc: & $ \{ \mathit{demo}(c) \cup \mathit{cat}(p) | \langle t, c, p \rangle\in\mf D\} $   &  A population tend to purchase products in a category. \\
+		{\em segment} $\rightarrow$ {\em category}  &  min support is \num{1000}  &  $\{< 35, F, *\}\rightarrow$ {\em Baby food}  \\
+	  &                                                                   &  $\{*, *, Nord\}\rightarrow$ {\em Sodas} \\
+	  &                                                                   &  $\{> 65, *, Gironde\}\rightarrow$ {\em Bordeaux wine} \\
+			\hline
+	 	\prodassocreceipt:& \(\displaystyle  \{ \cup_{\langle t, c_j, p_i \rangle\in\mf D} p_i | t\in T\} \)   & Products purchased \emph{simultaneously}. \\
+	  {\em product(s)} $\rightarrow$ {\em product}  &       min support is \num{1000}      & \{{\em vanilla cream}\}$\rightarrow$ {\em chocolate cream}\\
+		\hline
+		\prodassocclient: & \(\displaystyle  \{ \cup_{\langle t_j, c, p_i \rangle\in\mf D} p_i | c\in\mf C\} \)  &  Customers' product associations over time. \\
+		{\em product(s)} $\rightarrow$ {\em product} 	&       min support is \num{10000}     & \{{\em Pork sausage, mustard\}}$\rightarrow$ {\em dry Riesling} \\
+		\hline
+	\end{tabular}
+\caption{Our mining scenarios and example association rules.}
+\label{tab:scenarios}
+\end{table*}

@@ -1,0 +1,69 @@
+\begin{table}
+  %\setlength{\tabcolsep}{2pt}
+	\begin{tabular}{cc}
+		\begin{subtable}[b]{0.48\textwidth}
+      \begin{tabular}{|rl|}
+      \hline
+      \multicolumn{2}{|c|}{\textbf{by confidence}}               \\\hline
+      $\{> 65, F, $ Aube$\}$&$\rightarrow$ {\em Dairy}       \\
+      $\{> 65, F, $ Aveyron$\}$&$\rightarrow$ {\em Dairy}       \\
+      $\{> 65, F, $ Val de Marne$\}$& $ \rightarrow$ {\em Dairy}       \\
+      $\{> 65, F, $ Seine S$^{t}$ Denis$\}$& $ \rightarrow$ {\em Dairy}       \\
+      $\{> 65, F, $ Haute Saone$\}$& $ \rightarrow$ {\em Dairy}       \\
+      $\{> 65, F, $ Meuse$\}$& $ \rightarrow$ {\em Dairy}       \\
+      $\{> 65, *, $ Aube$\}$& $ \rightarrow$ {\em Dairy}       \\
+      $\{> 65, F, $ Haute Vienne$\}$& $ \rightarrow$ {\em Dairy}       \\
+      $\{> 65, F, $ Maine et Loire$\}$& $ \rightarrow$ {\em Dairy}       \\
+      $\{> 65, *, $ Val de Marne$\}$& $ \rightarrow$ {\em Dairy}           \\\hline
+      \end{tabular}
+		\end{subtable}
+		&
+		\hfill
+		\begin{subtable}[b]{0.48\textwidth}
+      \begin{tabular}{|rl|}
+      \hline
+      \multicolumn{2}{|c|}{\textbf{by Piatetsky-Shapiro~\cite{PiatetskyKDD91}}}       \\\hline
+    $\{*, *, $ Nord$\}$&$\rightarrow$ {\em Liquids}       \\
+    $\{*, *, $ Nord$\}$&$\rightarrow$ {\em Soft drinks}       \\
+    $\{*, *, $ Nord$\}$&$\rightarrow$ {\em Beers}       \\
+    $\{*, *, $ Nord$\}$&$\rightarrow$ {\em Spreads}       \\
+    $\{*, F, $ Nord$\}$&$\rightarrow$ {\em Soft drinks}       \\
+    $\{*, *, $ Nord$\}$&$\rightarrow$ {\em Imported beers}       \\
+    $\{*, F, $ Nord$\}$&$\rightarrow$ {\em Liquids}       \\
+    $\{*, F, $ Nord$\}$&$\rightarrow$ {\em Beers}       \\
+    $\{*, *, $ Finistere$\}$&$\rightarrow$ {\em Butters}       \\
+    $\{*, F, $ Garonne$\}$&$\rightarrow$ {\em Drugstore}          \\\hline
+    \end{tabular}
+		\end{subtable}
+		\\
+		\begin{subtable}{0.48\textwidth}
+  		\vspace{1em}
+      \begin{tabular}{|rl|}
+      \hline
+      \multicolumn{2}{|c|}{\textbf{by Pearson's $\chi^2$}}      \\\hline
+      $\{*, *, $ Somme$\}$&$\rightarrow$ {\em Cut cheese}       \\
+       $\{*, F, $ Somme$\}$&$\rightarrow$ {\em Cut cheese}       \\
+      $\{> 65, *,$ Morbihan$\}$&$\rightarrow$ {\em Fresh milk}       \\
+      $\{> 65, *,$ Somme$\}$&$\rightarrow$ {\em Cut cheese}       \\
+      $\{*, *,$ Finistere$\}$&$\rightarrow$ {\em Canned pork}       \\
+      $\{*, *,$ Cotes\ d'Armor$\}$&$\rightarrow$ {\em Canned pork}       \\
+      $\{> 65, F,$ Morbihan$\}$&$\rightarrow$ {\em Fresh milk}       \\
+      $\{*, *,$ Nord$\}$&$\rightarrow$ {\em Beer}       \\
+      $\{*, *,$ Nord$\}$&$\rightarrow$ {\em Sparkling liquors}       \\
+      $\{*, *,$ Vienne$\}$&$\rightarrow$ {\em Breakfast biscuits}   \\\hline
+      \end{tabular}
+		\end{subtable}
+		&
+		\hfill
+		\begin{minipage}{0.32\linewidth}
+  		\vspace{1em}
+			\caption{\label{tab:eyecatcher}
+        Top-10 demographics association rules, according to different interestingness measures.
+        Rules are denoted $\{\mathit{age, gender, department}$ $\} \rightarrow$ {\em product category}.
+        Product categories were translated to English for clarity.
+        French departments were left unchanged.
+      }
+		\end{minipage}
+		\\
+	\end{tabular}
+\end{table}

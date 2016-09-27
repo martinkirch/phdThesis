@@ -1,0 +1,20 @@
+\begin{algorithm}
+  \caption{\toppi's CIS exploration function}
+	\label{alg:toppi:expand}
+	\SetKwProg{myproc}{Function}{}{}
+	\myproc{$\mathit{expand}(I,e,{\cal D}_I,\varepsilon$)}{
+		\KwData{CIS $I$, extension item $e$, reduced dataset ${\cal D}_I$, frequency threshold $\varepsilon$}
+		\KwResult{If $\langle e, I\rangle$ is a relevant closure extension, collects CIS containing $\{e\}\cup I$ and items smaller than $e$}
+		\Begin{
+			$J \gets \mathit{closure}(\{e\}\cup I)$  \label{line:closure}\\
+			\If{$\mathit{max}(J \setminus I) = e$\label{line:fptest}}{
+      	$\mathit{collect}(J,\mathit{support}_{\cal D}(J), \mathit{true})$ \tcp*[f]{Update top-k-collector} \label{line:collect} \\
+				\ForEach(\tcp*[f]{In increasing item order}){$i < e \mid \mathit{support}_{{\cal D}_J}[i] \geq \varepsilon$\label{line:enumExtensions}}{
+          \If(\tcp*[f]{Additional pruning}){$\neg\mathit{prune}(J,i,{\cal D}_J,\varepsilon)$\label{line:pruneinsert}}{
+            $\mathit{expand}(J,i,{\cal D}_J,\varepsilon)$\label{line:recursivecall}
+          }
+				}
+			}
+		}
+  }
+\end{algorithm}

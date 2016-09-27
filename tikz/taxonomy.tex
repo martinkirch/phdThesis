@@ -1,0 +1,45 @@
+
+\node (root) at (-1,0) {[all]};
+
+\node (A_farleft) at (-4, -1.3) {Vegetables};
+\draw [->] (root.south) -- (A_farleft.north east);
+
+\node (A_left) at (-1,-1.3) {Grocery};
+\draw [->] (root.south) -- (A_left.north);
+
+\node (A_right) at (2,-1.3) {Beverages};
+\draw [->] (root.south) -- (A_right.north west);
+
+\node (A_farright) at (4,-1.3) {...};
+\draw [->,dotted] (root.south) -- (A_farright.north west);
+
+\node (B_farleft) at (-4,-2.6) {Organic};
+\draw [->] (A_left.south) -- (B_farleft.north east);
+
+\node (B_left) at (-1, -2.6) {Chocolate bars};
+\draw [->] (A_left.south) -- (B_left.north);
+
+\node (B_right) at (2, -2.6) {Breakfast};
+\draw [->] (A_left.south) -- (B_right.north west);
+
+\node (B_farright) at (4, -2.6) {...};
+\draw [->,dotted] (A_left.south) -- (B_farright.north west);
+
+\node (C_farleft) at (-4, -3.9) {Stuffed};
+\draw [->] (B_left.south) -- (C_farleft.north east);
+
+\node (C_left) at (-1, -3.9) {Family sized};
+\draw [->] (B_left.south) -- (C_left.north);
+
+\node (C_right) at (2, -3.9) {Desserts};
+\draw [->] (B_left.south) -- (C_right.north west);
+
+\node (C_farright) at (4, -3.9) {...};
+\draw [->, dotted] (B_left.south) -- (C_farright.north west);
+
+\node (D_l) at (-3, -5.2) {};
+\draw [->] (C_left.south) -- (D_l.north east);
+\node (D) at (-1, -5.5) {[...] products [...] };
+\draw [->] (C_left.south) -- (D.north);
+\node (D_r) at (1, -5.2) {};
+\draw [->] (C_left.south) -- (D_r.north west);

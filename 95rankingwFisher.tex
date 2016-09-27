@@ -1,0 +1,272 @@
+\chapter{Ranking with Fisher's exact test}
+\label{chap:fisher}
+
+
+
+The introduction of Fisher's exact test
+among \capa's quality measures (page \pageref{tab:measures})
+or as a post-processing of \toppi's results
+(when ranking by $p$-value, p.\pageref{sec:quali:pval})
+is inspired by the LAMP algorithm, proposed by Minato \textit{et al.}~\cite{MinatoKDD14}
+and detailed in page \pageref{sec:rel:lamp}.
+LAMP analyses transactional datasets where each transaction is annotated to
+show if it satisfies or not a target factor.
+The algorithm computes all closed itemsets having a $p$-value below a given threshold,
+{\em ie.} itemsets whose occurrences are positively correlated to the target factor.
+Its $p$-value computation relies on Fisher's exact test.
+Thus LAMP shows the interest and feasibility of Fisher's exact test to find
+strong correlation between some sub-populations and a target factor.
+However their experiments are made on small datasets (compared to ours)
+which contain a few thousands transactions over hundreds of frequent items.
+%--- LAMP internally relies on
+%frequent closed itemsets mining.
+
+Analogously, our target factor can be the presence of an item $i$ in transactions,
+who can be correlated to the occurrence of itemsets $I$ such that $i \notin \mathit{closure}(I)$.
+This would allow us to assess a statistical correlation between an itemset and a product,
+or between a population and a products category.
+But, as we are regularly observing supports in millions,
+Fisher's exact test raises a computational problem
+because it relies on binomial coefficients.
+We circumvent this problem by observing that we only need to rank itemsets or association rules:
+we are not interested in the absolute $p$-value.
+Hence we design a computable ranking measure, equivalent to Fisher's exact test.
+
+We start in Section~\ref{sec:fisher:base} by recalling how a $p$-value is computed with Fisher's exact test.
+Then Section~\ref{sec:fisher:factors} demonstrates a property of the $p$-value's factors,
+which is leveraged in Section~\ref{sec:fisher:measure} to define a ranking measure
+equivalent to the $p$-value.
+
+\paragraph{}{
+  For brevity, in the following $\mathit{support}(I)$ is denoted $\sigma_I$
+  and $\mathit{support}(\{i\})$ as $\sigma_i$.
+}
+
+\vfill
+\pagebreak
+
+\section{Computing $p$-values with Fisher's exact test}
+\label{sec:fisher:base}
+
+\begin{table}
+	\centering
+	\begin{tabular}{c|c|c||c|}
+\multicolumn{1}{c}{} & \multicolumn{1}{c}{$i$}    & \multicolumn{1}{c}{$\overline{i}$} & \multicolumn{1}{c}{} \\
+\cline{2-4}
+$I$                  & $\sigma_{I \cup i}$              & $\sigma_{I} - \sigma_{I \cup i}$   & $\sigma_{I}$   \\
+\cline{2-4}
+$\overline{I}$       & $\sigma_{i} - \sigma_{I \cup i}$ & $|{\cal D}| - (\sigma_{I} + \sigma_{i} - \sigma_{I \cup i})$          & $|{\cal D}| - \sigma_{I}$  \\
+\hhline{~===}
+\multicolumn{1}{c|}{}&  $\sigma_{i}$                    & $|{\cal D}| - \sigma_{i}$       &  $|{\cal D}|$ \\
+\cline{2-4}
+	\end{tabular}
+	\caption{\label{tab:crosstab}
+	Contingency table between the occurrence of an item $i$ and those of an itemset $I$ ($i \notin \mathit{closure}(I)$).}
+\end{table}
+
+In our setting, computing the correlation between occurrences of an item $i$ and
+those of an itemset $I$ relies on the contingency table shown in Table~\ref{tab:crosstab}.
+Following Fisher's exact test, we know that the probability to obtain the observed values,
+under the null hypothesis, is defined by:
+
+\begin{equation*}
+	P_{i,I,{\cal D}}(z) = \frac{ \binom{\sigma_{I}}{z} \binom{|{\cal D}| - \sigma_{I}}{\sigma_{i}-z} }
+							{ \binom{|{\cal D}|}{\sigma_{i}} }
+						%= \frac{ \binom{\sigma_{i}}{z} \binom{|{\cal D}| - \sigma_{i}}{\sigma_{I}-z} }
+						%	{ \binom{|{\cal D}|}{\sigma_{I}} }
+						\text{, where } z=\sigma_{I \cup i}
+\end{equation*}
+
+The $p$-value is obtained by summing this probability with
+the probabilities to obtain more biased distributions under the same marginal totals:
+
+\begin{equation*}
+	p(i,I,{\cal D}) = \sum_{z=\sigma_{I \cup i}}^{min(\sigma_{I}, \sigma_{i})}{P_{i,I,{\cal D}}(z)}
+\end{equation*}
+
+Measuring a low $p$-value (typically, below $0.05$) invalidates the null hypothesis,
+allowing one to claim that
+``buying all items in $I$ is correlated to buying item $i$'', for example.
+The binomial coefficients involved in $P_{i,I,{\cal D}}(z)$
+can quickly overflow the capacities of our usual representations
+(whether as integer or floating-point numbers).
+Hence the computation of $p$ relies on another, equivalent definition:
+
+\begin{equation}
+	\label{eq:expP}
+	p(i,I,{\cal D}) = \sum_{z=\sigma_{I \cup i}}^{min(\sigma_{I}, \sigma_{i})}
+					{  e^{ ln(P_{i,I,{\cal D}}(z))}  }
+\end{equation}
+
+$ln(P_{i,I,{\cal D}}(z))$ is computed by
+developing binomial coefficients as factorials,
+then distributing the logarithm
+and introducing Gamma functions using $\Gamma(n)=(n-1)!$~.
+The logarithm of the Gamma function is a well known computational problem~\cite{CodyMC67};
+we re-use the implementation available in WordHoard\footnote{\url{http://wordhoard.northwestern.edu/}}.
+
+Thus each $ln(P_{i,I,{\cal D}}(z))$ is quickly computed, without overflow.
+But it reaches very low (negative) values, especially for our itemsets of interest:
+when applying the exponential,
+all sum's factors are rounded to zero.
+Because of this rounding error,
+we may compute $p(i,I,{\cal D})=0$ for thousands of itemsets which are correlated to $i$.
+Such results are false and prevent us from ranking the corresponding itemsets precisely.
+
+These computational difficulties explain why
+Fisher's exact test is usually invoked on small datasets,
+counting their samples in thousands.
+With millions of transactions, we are pushing the computation to its limits.
+But we are not interested in the $p$-value itself:
+we only need to compare the $p(i,I,{\cal D})$ obtained by various itemsets $I$,
+for a fixed $i$ and ${\cal D}$.
+By precising which factors have the greatest contribution to the $p$-value
+we found a new, computable, ranking function which performs a similar ordering.
+
+
+
+
+
+\section{Comparing each factor's impact on the $p$-value}
+\label{sec:fisher:factors}
+
+We now precise how to assess if $I$ and $i$ are positively or negatively correlated.
+Then we demonstrate that, when the correlation is positive,
+the most important terms in the sum of equation~\ref{eq:expP} are the first ones,
+starting from $z=\sigma_{I \cup i}$.
+
+If we assume that $I$ and $i$ occur in transactions independently,
+then the probability to observe both in a transaction is:
+\begin{equation*}
+	P(i)P(I) = \frac{\sigma_{i}}{|{\cal D}|}\frac{\sigma_{I}}{|{\cal D}|}
+\end{equation*}
+
+Hence the expected support of $I \cup \{i\}$, under the independence assumption, is
+\begin{equation*}
+	\eta(I,i,{\cal D}) = \frac{\sigma_{I}\sigma{i}}{|{\cal D}|}
+\end{equation*}
+
+If the observed support $\sigma_{I \cup i}$ is lower than
+$\eta(I,i,{\cal D})$,
+then $I$ and $i$ are negatively correlated.
+In this case the $p$-value $p(i,I,{\cal D})$ will be closer to 1 than to 0,
+and $I$ will not appear among $i$'s most correlated itemsets.
+Therefore we tolerate the lack of precision when computing $p(i,I,{\cal D})$.
+Otherwise, we make the following observation:
+
+\begin{property}
+  \label{prop:Pdecrease}
+  For $z \geq \eta(I,i,{\cal D})$,
+  $P_{i,I,{\cal D}}(z)$ is monotonically decreasing.
+\end{property}
+
+\begin{proof}
+  Assuming that $z \geq \frac{\sigma_{I}\sigma{i}}{|{\cal D}|}$,
+  we prove that
+  $P_{i,I,{\cal D}}(z+1) \leq P_{i,I,{\cal D}}(z)$.
+
+  We start by decomposing $P_{i,I,{\cal D}}(z+1)$:
+  \begin{align*}
+    P_{i,I,{\cal D}}(z+1) = & \frac{ \binom{\sigma_{I}}{z+1} \binom{|{\cal D}| - \sigma_{I}}{\sigma_{i}-z-1} }
+                                   { \binom{|{\cal D}|}{\sigma_{i}} }  \\
+                        = & \frac{\sigma_I!}{(z+1)!(\sigma_I -z-1)!}\cdot
+                            \frac{(|{\cal D}|-\sigma_I)!}
+                                {(\sigma_i - z -1)!(|{\cal D}|-\sigma_I -\sigma_i +z + 1)!}\cdot
+                            \frac{\sigma_i!(|{\cal D}|-\sigma_i)!}{|{\cal D}|!}\\
+                        = & \frac{\sigma_I - z}{z+1}\cdot
+                            \frac{\sigma_I!}{z!(\sigma_I -z)!}\cdot
+                            \frac{\sigma_i - z}{|{\cal D}|-\sigma_I -\sigma_i +z+1}\cdot
+                            \frac{(|{\cal D}|-\sigma_I)!}
+                                {(\sigma_i - z)!(|{\cal D}|-\sigma_I -\sigma_i +z)!}\cdot \\
+                          & \frac{\sigma_i!(|{\cal D}|-\sigma_i)!}{|{\cal D}|!}\\
+                        = & \frac{1}{z+1}\cdot (\sigma_I - z) \cdot (\sigma_i - z) \cdot
+                            \frac{1}{|{\cal D}|-\sigma_I -\sigma_i +z+1}\cdot
+                            P_{i,I,{\cal D}}(z)
+  \end{align*}
+  From our assumption on $z$, we can derive an upper bound for the three first factors:
+  \begin{enumerate}
+    \item $z+1 > z \geq \frac{\sigma_I \sigma_i}{|{\cal D}|}$,
+      hence $\frac{1}{z+1} < \frac{|{\cal D}|}{\sigma_I \sigma_i}$
+
+    \item $\sigma_I - z \leq \sigma_I - \frac{\sigma_I \sigma_i}{|{\cal D}|} =
+      \frac{|{\cal D}|\sigma_I - \sigma_I \sigma_i}{|{\cal D}|} =
+      \frac{\sigma_I(|{\cal D}| - \sigma_i)}{|{\cal D}|}$
+
+    \item likewise, $\sigma_i - z \leq \frac{\sigma_i(|{\cal D}| - \sigma_I)}{|{\cal D}|}$
+  \end{enumerate}
+
+Therefore:
+\begin{align*}
+  P_{i,I,{\cal D}}(z+1) \leq &
+    \frac{|{\cal D}|}{\sigma_I \sigma_i} \cdot
+    \frac{\sigma_I(|{\cal D}| - \sigma_i)}{|{\cal D}|} \cdot
+    \frac{\sigma_i(|{\cal D}| - \sigma_I)}{|{\cal D}|} \cdot
+    \frac{1}{|{\cal D}|-\sigma_I -\sigma_i +z+1} \cdot
+    P_{i,I,{\cal D}}(z) \\
+  \leq &
+    \frac{1}{|{\cal D}|} \cdot
+    (|{\cal D}| - \sigma_i) \cdot
+    (|{\cal D}| - \sigma_I) \cdot
+    \frac{1}{|{\cal D}|-\sigma_I -\sigma_i +z+1} \cdot
+    P_{i,I,{\cal D}}(z) \\
+\end{align*}
+
+The product of the first four terms in the latter inequality is smaller than 1.
+Indeed, from our assumption that $z+1 \geq \frac{\sigma_I \sigma_i}{|{\cal D}|}$,
+by adding $|{\cal D}|-\sigma_I -\sigma_i$ we obtain:
+
+\begin{align*}
+  |{\cal D}|-\sigma_I -\sigma_i + z + 1 \geq  |{\cal D}|-\sigma_I -\sigma_i + \frac{\sigma_I \sigma_i}{|{\cal D}|}
+       = & \frac{1}{|{\cal D}|} \cdot (|{\cal D}|^2 - |{\cal D}|\sigma_I -|{\cal D}|\sigma_i + \sigma_I \sigma_i) \\
+       = & \frac{1}{|{\cal D}|} \cdot (|{\cal D}| - \sigma_I) \cdot (|{\cal D}| -\sigma_i)
+\end{align*}
+
+Thus $P_{i,I,{\cal D}}(z+1) \leq P_{i,I,{\cal D}}(z)$.
+
+\end{proof}
+
+Property~\ref{prop:Pdecrease} implies that, if $\sigma_{I \cup i} > \eta(I,i,{\cal D})$,
+then the first term in the $p$-value's sum (see Equation~\ref{eq:expP}) is the greatest.
+In order to compute a useful approximation of $p(i,I,{\cal D})$,
+we therefore have to ensure that $P_{i,I,{\cal D}}(\sigma_{I \cup i})$
+gets the best precision.
+
+
+\section{An equivalent ranking measure}
+\label{sec:fisher:measure}
+
+Following the previous observation,
+when $I$ and $i$ are positively correlated
+we introduce an adjustment factor $a(i,I,{\cal D})$,
+which is the only integer such that:
+\begin{equation}
+	1000*a(i,I,{\cal D}) + ln(P_{i,I,{\cal D}}(\sigma_{I \cup i})) \in [-500, 500]
+\end{equation}
+
+We choose $[-500, 500]$ because,
+using 64-bits floating point numbers,
+$e^{x}$ never overflows for $x \in [-500, 500]$.
+If $\sigma_{I \cup i} \le \eta(I,i,{\cal D})$ then $a(i,I,{\cal D}) = 0$.
+
+Once this adjustment factor has been set
+we can compute:
+
+\begin{equation}
+	\label{eq:expR}
+	r(i,I,{\cal D}) =
+	e^{1000*a(i,I,{\cal D})} * p(i,I,{\cal D}) =
+		\sum_{z=\sigma_{I \cup i}}^{min(\sigma_{I}, \sigma_{i})}
+					{  e^{ 1000*a(i,I,{\cal D}) + ln(P_{i,I,{\cal D}}(z))}  }
+\end{equation}
+
+Our ranking function sorts itemsets descendently regarding $a(i,I,{\cal D})$,
+then ascendently regarding $r(i,I,{\cal D})$.
+This closely approximates a ranking by increasing $p(i,I,{\cal D})$.
+
+In practice, $r(i,I,{\cal D})$ is never null because
+the first term of the above sum fits in a 64-bits floating point number,
+thanks to the adjustment factor.
+Some of the following terms may still overflow and get rounded to 0,
+in which case the monotony allows an early termination of the sum's computation.
+The computed value is a satisfying approximation of $r(i,I,{\cal D})$ and,
+usually, the most correlated itemsets differ in the ranking by $a$ alone.

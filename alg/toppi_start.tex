@@ -1,0 +1,16 @@
+\begin{algorithm}
+	\caption{\toppi's CIS enumeration branch preparation}
+	\label{alg:toppi:start}
+  \SetKwProg{myproc}{Function}{}{}
+  \myproc{$\mathit{startBranch(i,{\cal D}, k)}$}{
+    \KwData{root item $i$, dataset $\cal D$, integer $k$}
+	  \KwResult{Enumerates CIS $I$ such that $\mathit{max}(I)=i$}
+	  \Begin{
+			\ForEach(\tcp*[f]{Pre-filling}){$j\in \mathit{topDistinctSupports}({\cal D}[i], k) \mid i \neq j$\label{line:topitemplaceholders}}{
+				$\mathit{collect}(\{i, j\}, \mathit{support}_{{\cal D}[i]}(j), \mathit{false})$\label{line:placeholders}\\
+			}
+			$\varepsilon_i \gets \mathit{min}_{j \leq i}(\mathit{lowestSupportIn(top(j)))}$\label{line:raiseepsilon}\tcp*[f]{Dynamic th. adjustment}\\
+			$\mathit{expand}(\emptyset, i, {\cal D}, \varepsilon_i)$\label{line:expandsingleton}\\
+		}
+  }
+\end{algorithm}

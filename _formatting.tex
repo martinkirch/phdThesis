@@ -1,0 +1,45 @@
+\usepackage[pagestyles]{titlesec}
+
+\newpagestyle{main}{
+  \sethead[\sffamily {\textbf\thepage}~~\chaptertitlename~\thechapter. \chaptertitle ][][] % even  - left
+  {}{}{\sffamily \thesection. \sectiontitle ~~{\textbf\thepage}} % odd  - right
+  \headrule
+  %\setfoot[\sffamily\thepage][][] % even  - left
+  %{}{}{\sffamily\thepage}      % odd  - right
+}
+
+\newpagestyle{chap}{
+  %\sethead[][][] % even  - left
+  %{}{}{} % odd  - right
+
+  %\setfoot[\sffamily\thepage][][] % even  - left
+  %{}{}{\sffamily\thepage}      % odd  - right
+}
+\assignpagestyle{\chapter}{chap}
+
+\titleformat{\chapter}[display]  % command - shape
+  {\sffamily\bfseries\Large} % format (label + text)
+  {\filleft\MakeUppercase{\chaptertitlename} \Huge\thechapter}  %label
+  {0pt} % horizontal sep between label and title body (mandatoy)
+  {\titlerule\vspace{1em}\filright} % before
+  [\vspace{1em}\titlerule] % after
+
+
+\titleformat{\section}[hang]
+  {\Large\sffamily\bfseries}
+  {\thesection}
+  {1em}
+  {}
+  [\vspace{1ex}\titlerule]
+
+\titleformat{\subsection}[hang]
+  {\large\sffamily\bfseries}
+  {\thesubsection}
+  {1em}
+  {}
+
+\titleformat{\subsubsection}[hang]
+  {\normalsize\sffamily\bfseries}
+  {}
+  {1em}
+  {}

@@ -1,0 +1,30 @@
+\begin{algorithm}[t]
+	\caption{\toppi's pruning function}
+	\label{alg:topk}
+	\SetKwProg{myproc}{Function}{}{}
+	\myproc{$\mathit{prune(I,e,D_I,\varepsilon)}$}{
+	  	\KwData{itemset $I$, extension item $e$, reduced dataset $D_I$, minimum support threshold $\varepsilon$}
+	  	\KwResult{\texttt{true} if $\mathit{expand(I,e,{\cal D}_I,\varepsilon)}$ will not provide new results to the top-$k$-collector, \texttt{false} otherwise}
+		\Begin{
+			\If(\tcp*[f]{Case~\ref{toppi:cq:e}\label{line:extension:start}}){$\mathit{support_{{\cal D}_I}(\{e\})) \geq lowestSupportIn(top(e))}$}{
+				\KwRet{\texttt{false}}\label{line:extension:end}
+			}
+			\ForEach(\tcp*[f]{Case~\ref{toppi:cq:P}\label{line:current:start}}){$i \in I$}{
+				\If(\label{line:current:test}){$\mathit{support_{{\cal D}_I}(\{e\})) \geq lowestSupportIn(top(i))}$}{
+					\KwRet{\texttt{false}}\label{line:current:end}
+				}
+			}
+			\ForEach(\tcp*[f]{Case~\ref{toppi:cq:others}\label{line:future:start}}){$i < e \mid \mathit{support}_{{\cal D}_I}[i] \geq \varepsilon$}{
+				$\mathit{bound} \gets \mathit{min(support_{{\cal D}_I}(\{e\}),support_{{\cal D}_I}(\{i\}))}$\label{line:bound}\\
+				\If(){$\mathit{bound \geq lowestSupportIn(top(i))} $\label{line:boundcheckfuture}}{
+					%$J \gets \bigcap_{t \in D_P[\{j\}]}t$\label{eq:topkpptest:start}\tcp*[f]{ie. $J \gets \mathit{closure}(\{j\} \cup P)$}\\
+					%\If{$\mathit{max(J)} \leq e$\label{eq:topkpptest:end}}{
+						\KwRet{\texttt{false}}\label{line:future:end}
+					%}
+				}
+			}
+			$\mathit{bound}_\mathit{min}(I) \gets \mathit{min}(\mathit{bound}, \mathit{bound}_\mathit{min}(I))$ \\
+			\KwRet{\texttt{true}}
+		}
+	}
+\end{algorithm}

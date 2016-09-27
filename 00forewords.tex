@@ -1,0 +1,170 @@
+%\chapter*{Forewords}
+
+{
+\newpage
+\thispagestyle{empty}
+\mbox{}
+\newpage
+}
+
+\pagestyle{chap}
+
+
+
+
+\section*{Abstract}
+
+\subsection*{Mining and ranking closed itemsets from large-scale transactional datasets}
+
+\begin{paragraph}{Keywords}
+  Data mining, Big Data, Parallel systems,
+  Association rules,
+  Quality measures
+\end{paragraph}
+
+The recent increase of data volumes raises new challenges for itemset mining algorithms.
+In this thesis, we focus on transactional datasets (collections of items sets, for example supermarket tickets)
+containing at least a million transactions over hundreds of thousands items.
+These datasets usually follow a ``long tail'' distribution:
+a few items are very frequent,
+and most items appear rarely.
+Such distributions are often truncated by existing itemset mining algorithms,
+whose results concern only a very small portion of the available items (the most frequents, usually).
+Thus, existing methods fail
+to concisely provide relevant insights on large datasets.
+We therefore introduce a new semantics which is more intuitive for the analyst:
+browsing associations per item, for any item, and less than a hundred associations at once.
+%The system should be able to answer such requests instantly, for any item,
+%which suggests a batch-oriented computation of results.
+
+To address the items' coverage challenge,
+our first contribution is the item-centric mining problem.
+It consists in computing, for each item in the dataset,
+the $k$ most frequent closed itemsets containing this item.
+We present an algorithm to solve it, \toppi.
+We show that \toppi computes efficiently interesting results over our datasets,
+outperforming simpler solutions
+or emulations based on existing algorithms,
+both in terms of run-time and result completeness.
+We also show and empirically validate how \toppi can be parallelized, on multi-core machines and on Hadoop clusters,
+in order to speed-up computation on large scale datasets.
+
+%The selection of a few results of interest is also
+%To address the  challenge, our second contribution
+Our second contribution is \capa, a framework allowing us to study which existing measures of association rules' quality
+are relevant to rank results.
+This concerns results obtained from \toppi or from \jlcm,
+our implementation of a state-of-the-art frequent closed itemsets mining algorithm (LCM).
+Our quantitative study shows that the \nbm quality measures we compare can be grouped
+into 5 families, based on the similarity of the rankings they produce.
+We also involve marketing experts in a qualitative study,
+in order to discover which of the 5 families we propose highlights
+the most interesting associations for their domain.
+
+Our close collaboration with Intermarch\'e,
+one of our industrial partners in the \datalyse project,
+allows us to show extensive experiments on real, nation-wide supermarket data.
+We present a complete analytics workflow addressing this use case.
+We also experiment on Web data.
+Our contributions can be relevant in various other fields,
+thanks to the genericity of transactional datasets.
+
+Altogether our contributions allow analysts to discover associations of interest in modern datasets.
+We pave the way for a more reactive discovery of items' associations in large-scale datasets,
+whether on highly dynamic data or for interactive exploration systems.
+
+
+
+
+
+
+
+\vfill\pagebreak
+\section*{R\'esum\'e}
+
+\begin{paragraph}{Mots-cl\'es}
+Fouille de donn\'ees,
+Grandes masses de donn\'ees,
+Syst\`emes parall\`eles,
+R\`egles d'association,
+Mesures de qualit\'e
+\end{paragraph}
+
+Les algorithmes actuels pour la fouille d'ensembles fr\'equents sont d\'epass\'es par
+l'aug\-mentation des volumes de donn\'ees.
+Dans cette th\`ese nous nous int\'eressons plus particuli\`erement aux donn\'ees transactionnelles
+(des collections d'ensembles d'objets, par exemple des tickets de caisse)
+qui contiennent au moins un million de transactions portant sur au moins des centaines de milliers d'objets.
+Les jeux de donn\'ees de cette taille suivent g\'en\'eralement une distribution dite en ``longue traine'':
+alors que quelques objets sont tr\`es fr\'equents, la plupart sont rares.
+Ces distributions sont le plus souvent tronqu\'ees par les algorithmes de fouille d'ensembles fr\'equents,
+dont les r\'esultats ne portent que sur une infime partie des objets disponibles (les plus fr\'equents).
+Les m\'ethodes existantes ne permettent donc pas de d\'ecouvrir des associations concises et pertinentes
+au sein d'un grand jeu de donn\'ees.
+Nous proposons donc une nouvelle s\'emantique, plus intuitive pour l'analyste:
+parcourir les associations {\em par objet}, au plus une centaine \`a la fois, et ce {\em pour chaque objet} pr\'esent
+dans les donn\'ees.
+
+Afin de parvenir \`a couvrir tous les objets,
+notre premi\`ere contribution consiste à d\'efinir la {\em fouille centr\'ee sur les objets}.
+Cela consiste \`a calculer, pour chaque objet trouv\'e dans les donn\'ees,
+les $k$ ensembles d'objets les plus fr\'equents qui le contiennent.
+Nous pr\'esentons un algorithme effectuant ce calcul, \toppi.
+Nous montrons que \toppi calcule efficacement des r\'esultats int\'eressants sur nos jeux de donn\'ees.
+Il est plus performant que des solutions naives ou des \'emulations reposant sur des algorithmes existants,
+aussi bien en termes de rapidit\'e que de compl\'etude des r\'esultats.
+Nous d\'ecrivons et exp\'erimentons deux versions parall\`eles de \toppi
+(l'une sur des machines multi-coeurs,
+l'autre sur des grappes Hadoop)
+qui permettent d'acc\'elerer le calcul à grande \'echelle.
+
+Notre seconde contribution est \capa,
+un syst\`eme permettant d'\'etudier quelle mesure de qualit\'e des r\`egles d'association
+serait la plus appropri\'ee pour trier nos r\'esultats.
+Cela s'applique aussi bien aux r\'esultats issus de \toppi que de \jlcm,
+notre impl\'ementation d'un algorithme r\'ecent de fouille d'ensembles fr\'equents ferm\'es (LCM).
+Notre \'etude quantitative montre que les 39 mesures que nous comparons
+peuvent \^etre regroup\'ees en 5 familles,
+d'apr\`es la similarit\'e des classements de r\`egles qu'elles produisent.
+Nous invitons aussi des experts en marketing \`a participer \`a une \'etude qualitative,
+afin de d\'eterminer laquelle des 5 familles que nous proposons met en avant
+les associations d'objets les plus pertinentes dans leur domaine.
+
+Notre collaboration avec Intermarch\'e,
+partenaire industriel dans le cadre du projet \datalyse,
+nous permet de pr\'esenter des exp\'eriences compl\`etes et portant
+sur des donn\'ees r\'eelles issues de supermarch\'es dans toute la France.
+Nous d\'ecrivons un flux d'analyse complet, \`a m\^eme de r\'epondre \`a cette application.
+Nous pr\'esentons également des exp\'eriences portant sur des donn\'ees issues d'Internet;
+gr\^ace \`a la g\'en\'ericit\'e du mod\`ele des ensembles d'objets,
+nos contributions peuvent s'appliquer dans d'autres domaines.
+
+Nos contributions permettent donc aux analystes
+de d\'ecouvrir des associations d'objets au milieu de grandes masses de donn\'ees.
+Nos travaux ouvrent aussi la voie vers la fouille d'associations interactive \`a large \'echelle,
+afin d'analyser des donn\'ees hautement dynamiques
+ou de r\'eduire la portion du fichier \`a analyser \`a celle qui int\'eresse le plus l'analyste.
+%ou de s'int\'egrer dans des syst\`emes interactifs.
+
+
+
+
+\section*{Remerciements}
+
+
+Je tiens tout d'abord à remercier mes parents pour leur indéfectible soutien ces 29 dernières années.
+Merci à Sihem Amer-Yahia et Vincent Leroy pour leur investissement tout au long de ma thèse,
+ainsi qu'à Alexandre Termier et Marie-Christine Rousset pour m'avoir mis le pied à l'étrier scientifique.
+Merci enfin à Etienne Millon de m'avoir relu et aidé à dresser \LaTeX.
+
+\noindent
+Beaucoup d'autres ont contribué de manière aussi indispensable qu'indirecte aux travaux qui suivent ;
+la \textit{mixtape} p.\pageref{chap:discography} vous est dédiée.
+
+
+\vfill
+
+\begin{paragraph}{}\noindent
+  Th\`ese effectu\'ee au LIG dans le cadre du \textit{programme d'investissement d'avenir} Datalyse.
+  Manuscrit transmis aux rapporteurs le Jeudi 2 Juin 2016.
+\end{paragraph}

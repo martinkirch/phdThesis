@@ -1,0 +1,20 @@
+\begin{table}[t!]
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+{\bf Dataset}     & {\bf \#Transactions} & {\bf \#Items} & {\bf File size} & {\bf Average trans-} \\
+                  &                      &                &                & {\bf -action length} \\ \hline
+{\em LastFM}      & \num{1218831}   & \num{1206195}&  277 MB  & 47  \\
+{\em WebDocs}     & \num{1692082}   & \num{5267656}&  1.4 GB  & 177  \\
+\demoassoc        & \num{2398}      & \num{241921} &  39 MB   & 1617 \\
+\prodassocreceipt & \num{290734163} & \num{222228} &  23.4 GB & 12 \\
+\prodassocclient  & \num{9267961}   & \num{222228} & 13.3 GB  & 213 \\
+\hline
+\end{tabular}
+\caption{Our datasets' cardinalities.
+\demoassoc is actually a compressed representation of our transactions of interest
+(see Section~\ref{sec:scenarios}, p.\pageref{sec:scenarios});
+during the mining, the algorithm interprete these as transactions of at most 5 items (see Section~\ref{sec:capa:mining}, p.\pageref{sec:capa:mining}).
+\label{tab:datasets}
+}
+\end{table}

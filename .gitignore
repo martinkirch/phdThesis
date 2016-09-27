@@ -1,0 +1,15 @@
+*.aux
+*.log
+*.synctex.gz
+*.dvi
+.*.ini
+*.bbl
+*.blg
+*.nav
+*.out
+*.toc
+*.snm
+*.sta
+*.maf
+*.mtc*
+thesis.pdf
